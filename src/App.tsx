@@ -1,7 +1,8 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider, Outlet, Link } from 'react-router-dom';
 import './App.css';
-import { BookList, bookLoader } from './BookList';
+import { BookList, bookListLoader } from './BookList';
+import { BookDetails, bookLoader } from './BookDetails';
 
 function App() {
   const router = createBrowserRouter([
@@ -15,8 +16,13 @@ function App() {
       children: [
         {
           path: '/books',
-          loader: bookLoader,
+          loader: bookListLoader,
           element: <BookList />
+        },
+        {
+          path: '/books/:bookId',
+          loader: bookLoader,
+          element: <BookDetails />
         }
       ]
     }

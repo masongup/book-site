@@ -1,18 +1,10 @@
 import { useLoaderData, Link } from 'react-router-dom';
+import { apiBaseLocation, apiBook } from './common';
 
-export async function bookLoader() {
-  const response = await fetch('https://www.masongup.com/BookApi/books?order=id&select=id,title,authors(id,name)');
+export async function bookListLoader() {
+  const response = await fetch(`${apiBaseLocation}books?order=id&select=id,title,authors(id,name)`);
   const data = await response.json();
   return { books: data }
-}
-
-interface apiBook {
-  id: number,
-  title: string,
-  authors: {
-    id: number,
-    name: string,
-  }
 }
 
 export function BookList() {
@@ -23,7 +15,7 @@ export function BookList() {
     <table>
         <tr><th>Title</th><th>Author</th></tr>
         { books.map(b => <tr key={b.id}>
-          <td>{b.title}</td>
+          <td><Link to={`/books/${b.id}`}>{b.title}</Link></td>
           <td>{b.authors.name}</td>
         </tr> )}
     </table>
